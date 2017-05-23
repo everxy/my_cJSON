@@ -1,0 +1,4 @@
+/Users/minexiong/gitcode/my_cJSON/CMakeFiles/cjson_test.dir
+/Users/minexiong/gitcode/my_cJSON/CMakeFiles/rebuild_cache.dir
+/Users/minexiong/gitcode/my_cJSON/CMakeFiles/edit_cache.dir
+/Users/minexiong/gitcode/my_cJSON/CMakeFiles/cjson.dir

@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/minexiong/gitcode/my_cJSON/cjson.h
+stddef.h
+-
+
+/Users/minexiong/gitcode/my_cJSON/test.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+cjson.h
+/Users/minexiong/gitcode/my_cJSON/cjson.h
+
