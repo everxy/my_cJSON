@@ -1,1 +1,1 @@
-/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -ansi -pedantic -Wall -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cjson_test.dir/test.c.o  -o cjson_test libcjson.a 
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc  -ansi -pedantic -Wall -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/cjson_test.dir/test.c.o  -o cjson_test libcjson.a 
