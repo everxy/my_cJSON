@@ -11,13 +11,17 @@
 #include <stddef.h>
 typedef enum { LEPT_NULL, LEPT_FALSE, LEPT_TRUE, LEPT_NUMBER, LEPT_STRING, LEPT_ARRAY, LEPT_OBJECT } lept_type;
 
-typedef struct {
+typedef struct lept_value lept_value;
+
+struct lept_value {
     union {
         double n;
         struct {char *s;size_t len;} s;
+        struct { lept_value *e;size_t size; } a;/*array,size表示个数，e是指向元素类型为lept_value的数组的指针*/
     } u;
     lept_type   type;
-}lept_value;
+
+};
 
 enum {
     LEPT_PARSE_OK = 0,
@@ -27,9 +31,12 @@ enum {
     LEPT_PARSE_NUMBER_TOO_BIG,
     LEPT_PARSE_MISS_QUOTATION_MARK,
     LEPT_PARSE_INVALID_STRING_ESCAPE,
-    LEPT_PARSE_INVALID_STRING_CHAR
+    LEPT_PARSE_INVALID_STRING_CHAR,
+    LEPT_PARSE_INVALID_UNICODE_HEX,
+    LEPT_PARSE_INVALID_UNICODE_SURROGATE,
+    LEPT_PARSE_MISS_COMMA_OR_SQUARE_BRACKET
 };
-#define lept_init(v)    do { (v)->type == NULL; }while(0)
+#define lept_init(v)    do { (v)->type == LEPT_NULL; }while(0)
 
 void lept_free(lept_value *v);
 
@@ -46,8 +53,13 @@ void lept_set_number(lept_value *v,double n);
 int lept_get_boolean(const lept_value *v);
 void lept_set_boolean(lept_value *v,int b);
 
+size_t lept_get_array_size(const lept_value* v);
+lept_value * lept_get_array_element(const lept_value *v,size_t index);
+
 
 #define lept_set_null(v) lept_free(v)
+
+
 
 
 #endif

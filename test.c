@@ -34,18 +34,22 @@ static int test_pass = 0;
 #define TEST_NUMBER(expect,json)\
         do{\
             lept_value v;\
+            lept_init(&v);\
             EXPECT_EQ_INT(LEPT_PARSE_OK,lept_parse(&v,json));\
             EXPECT_EQ_INT(LEPT_NUMBER,lept_get_type(&v));\
             EXPECT_EQ_DOUBLE(expect,lept_get_number(&v));\
+            lept_free(&v);\
         }while(0)
 
 #define TEST_ERROR(error,json)\
         do {\
             lept_value v;\
+            lept_init(&v);\
             v.type = LEPT_FALSE;\
             EXPECT_EQ_INT(error,lept_parse(&v,json));\
             EXPECT_EQ_INT(LEPT_NULL,lept_get_type(&v));\
-        } while(0)
+            lept_free(&v);\
+           } while(0)
 
 #define TEST_STRING(expect,json)\
         do {\
@@ -204,8 +208,22 @@ static void test_access_number() {
 static void test_parse_string() {
     TEST_STRING("","\"\"");
     TEST_STRING("HELLP","\"HELLP\"");
-    TEST_STRING("hello\nworld","\"hello\\world\"");
+    TEST_STRING("hello\nworld","\"hello\\nworld\"");
     TEST_STRING("\" \\ / \b \f \n \r \t", "\"\\\" \\\\ \\/ \\b \\f \\n \\r \\t\"");
+}
+
+#if defined(_MSC_VER)
+#define EXPECT_EQ_SIZE_T(expect,actual)     EXPECT_EQ_BASE((expect)==(actual),(size_t)expect,(size_t)actual,"%Iu");
+#else
+#define EXPECT_EQ_SIZE_T(expect,actual)     EXPECT_EQ_BASE((expect)==(actual),(size_t)expect,(size_t)actual,"%zu");
+#endif
+
+static void test_parse_array() {
+    lept_value v;
+    lept_init(&v);
+    EXPECT_EQ_INT(LEPT_PARSE_OK,lept_parse(&v,"[  ]"));
+    EXPECT_EQ_INT(LEPT_ARRAY,lept_get_type(&v));
+    EXPECT_EQ_SIZE_T(0,lept_get_array_size(&v));
 }
 
 static void test_parse() {
