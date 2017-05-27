@@ -19,6 +19,8 @@ math.h
 -
 string.h
 -
+stdio.h
+-
 
 /Users/minexiong/gitcode/my_cJSON/cjson.h
 stddef.h
